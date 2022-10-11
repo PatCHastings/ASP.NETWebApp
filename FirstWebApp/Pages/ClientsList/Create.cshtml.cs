@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data.SqlClient;
 
 namespace FirstWebApp.Pages.ClientsList
 {
@@ -7,7 +8,7 @@ namespace FirstWebApp.Pages.ClientsList
     {
         public ClientInfo clientInfo = new ClientInfo();
         public String errorMessage = "";
-        public String SuccessMessage = "";
+        public String successMessage = "";
         public void OnGet()
         {
         }
@@ -27,9 +28,37 @@ namespace FirstWebApp.Pages.ClientsList
             }
 
             //save the new client into the database
+            try
+            {
+                String connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=mystore;Integrated Security=True";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    String sql = "INSERT INTO clientsList " +
+                                 "(name, email, phone, address) VALUES " +
+                                 "(@name, @email, @phone, @address);";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", clientInfo.name);
+                        command.Parameters.AddWithValue("@email", clientInfo.email);
+                        command.Parameters.AddWithValue("@phone", clientInfo.phone);
+                        command.Parameters.AddWithValue("@address", clientInfo.address);
+
+                        command.ExecuteNonQuery();  
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return;
+            }
 
             clientInfo.name = ""; clientInfo.email = ""; clientInfo.phone = ""; clientInfo.address = "";
-            SuccessMessage = "New Client Added Correctly";
+            successMessage = "New Client Added Correctly";
+
+            Response.Redirect("/ClientsList/Index");
         }
     }
 }
