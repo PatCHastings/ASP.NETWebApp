@@ -1,6 +1,7 @@
 ﻿@page
 @model FirstWebApp.Pages.ContactModel
 @{
+    ViewData["Title"] = "Contact page";
 }
 
 <h3>Contact Form</h3>
@@ -15,10 +16,10 @@
 <div class="container">
     <form method="POST">
         <label for="fname">First Name</label><br>
-        <input type="text" id="fname" name="firstname"<br>
+        <input type="text" id="fname" name="firstname"/><br>
 
         <label for="lname">Last Name</label><br>
-        <input type="text" id="lname" name="lastname"<br>
+        <input type="text" id="lname" name="lastname"/><br>
 
         <label for="message" >Message</label><br>
         <textarea id="message" name="message" style="height:200px"></textarea><br>

@@ -13,7 +13,7 @@ namespace FirstWebApp.Pages
         {
         }
 
-        public void onPost()
+        public void OnPost()
         {
             hasData = true;
             firstName = Request.Form["firstname"];
