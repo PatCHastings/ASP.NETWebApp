@@ -6,7 +6,7 @@ namespace FirstWebApp.Pages.ClientsList
 {
     public class IndexModel : PageModel
     {
-        public List<ClientInfo> Clients = new List<ClientInfo>();   
+        public List<ClientInfo> listClients = new List<ClientInfo>();   
         public void OnGet()
         {
             try
@@ -30,6 +30,8 @@ namespace FirstWebApp.Pages.ClientsList
                                 clientInfo.phone = reader.GetString(3);
                                 clientInfo.address = reader.GetString(4);
                                 clientInfo.created_at = reader.GetDateTime(5).ToString();
+
+                                listClients.Add(clientInfo);
                             }
                         }
                     }
@@ -37,7 +39,7 @@ namespace FirstWebApp.Pages.ClientsList
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine("Exception: " + ex.ToString());
             }
         }
     }
