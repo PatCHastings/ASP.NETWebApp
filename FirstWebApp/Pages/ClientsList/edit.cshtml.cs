@@ -11,7 +11,7 @@ namespace FirstWebApp.Pages.ClientsList
         public String successMessage = "";
         public void OnGet()
         {
-            String id = Request.Query["ID"];    
+            String id = Request.Query["id"];    
 
             try
             {
@@ -19,10 +19,10 @@ namespace FirstWebApp.Pages.ClientsList
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT * FROM clients WHERE id=@id";
+                    String sql = "SELECT * FROM clientsList WHERE id=@id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("ID", id);
+                        command.Parameters.AddWithValue("@id", id);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
@@ -66,7 +66,7 @@ namespace FirstWebApp.Pages.ClientsList
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "UPDATE clients " +
+                    String sql = "UPDATE clientsList " +
                                  "SET name=@name, email=@email, phone=@phone, address=@address " +
                                  "WHERE id=@id";
 
